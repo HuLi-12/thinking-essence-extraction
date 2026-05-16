@@ -7,7 +7,8 @@
 ## 示例 1：ASPP dilation 改小后部分类别提升但整体 mIoU 下降
 
 **问题背景**：DeepLabV3+ 中将 ASPP branch 的 dilation 从 (6,12,18) 改为 (3,6,9)，
-建物/道路等大尺度类别 mIoU 上升 0.5-1%，但整体 mIoU 下降 0.3-0.5%。
+barren/agriculture 等局部纹理或碎片斑块类提升，但 road/building/water 等依赖连续区域一致性的类别下降，
+最终整体 mIoU 下降 0.3-0.5%。
 
 **【常见说法】**
 大 dilation 对小目标有负作用，改小 dilation 能改善小目标，但会损失大目标的上下文。
@@ -32,8 +33,9 @@ ASPP dilation 改小的本质是调整 ERF 与目标尺度之间的对齐关系�
 **【机制链】**
 dilation (6,12,18) → (3,6,9)
 → ERF 中心区域采样密度 ↑，外围覆盖范围 ↓
-→ road/building 等大面积类别：改小后外围远距离采样点减少 → 覆盖连续性下降 → 边界一致性下降 → 大目标边界类 mIoU 可能下降
-→ agriculture/barren：目标斑块较小 → 大 dilation 采样点大量落在无关区域（噪声）→ 改小后采样噪声 ↓ → 小目标 mIoU 上升
+→ barren/agriculture：目标常以碎片斑块或局部纹理形式出现 → 小 dilation 降低无关区域采样噪声 → 局部响应更稳定 → IoU 可能上升
+
+→ road/building/water：更依赖长距离连续性、边界一致性或区域一致性 → 小 dilation 外围覆盖不足 → 连续区域建模下降 → IoU 可能下降
 → 整体 mIoU 取决于两类变化的净效应
 
 **【代价交换】**

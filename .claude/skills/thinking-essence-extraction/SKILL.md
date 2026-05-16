@@ -99,7 +99,7 @@ description: >
 
 ## Forbidden Phrases
 
-禁止把以下话术当成最终解释：
+禁止将以下话术作为未展开的最终解释：
 
 ```text
 增强语义信息
@@ -426,7 +426,7 @@ small branch 与原 ASPP low-dilation branch 功能重叠
 3. 对比 road/building 的 boundary IoU → 验证边界一致性假设
 
 【下一步】
-跑最小验证 1 和 3，两天内出结论。
+优先跑最小验证 1 和 3，先排除新增分支扰动和边界一致性下降这两个假设。
 ```
 
 ---
