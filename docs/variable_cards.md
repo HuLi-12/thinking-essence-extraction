@@ -401,3 +401,40 @@
 - 每次实验同时报告 mIoU 和 class-wise IoU，不只看汇总指标
 - 计算类间方差或最差类 IoU 作为辅助评价
 - 用 confusion matrix 检查是否有类别被合并
+
+---
+
+## Prototype Count ↔ Intra-class Variance
+
+**关系**：单原型分类器假设每个类别在 feature space 中呈单峰分布。但 LoveDA 中 road/building/barren 常呈现多模态（同类别在不同图像中纹理差异大）。
+
+**本质**：以原型数量和计算复杂度为代价，换取对类内多模态分布的建模能力。
+
+**风险**：
+- 原型数过多 → 原型退化为记忆样本而非聚类中心
+- 同类别多个原型间的区分度下降 → 原型之间互相竞争而非互补
+- 原型初始化敏感 → 不同 seed 下多个原型的分配可能不一致
+
+**可验证**：
+- 可视化每个原型的 attention 区域：不同原型是否关注同一类别的不同子模式
+- 改变原型数看类内方差的下降曲线——找 elbow point
+- 对比单原型 vs 多原型在易混淆类别对（road↔building）上的 IoU 差距
+
+---
+
+## Boundary Loss ↔ Region Consistency
+
+**关系**：Boundary loss 显式惩罚边界区域的预测错误，但可能牺牲大面积 homogeneous 区域的一致性。
+
+**本质**：以区域内部的预测平滑度为代价，换取边界定位精度的提升。
+
+**风险**：
+- boundary loss 权重过大 → 模型过度关注边界 → 内部区域出现碎片化预测
+- 边界定义的 δ 参数敏感——δ 太小采样点不足，δ 太大退化为普通 loss
+- boundary loss 与交叉熵的梯度方向在边界区域可能一致，但在内部区域可能冲突
+
+**可验证**：
+- 对比不同 boundary loss 权重下的 B-IoU 与 mIoU 变化趋势
+- 可视化 homogeneous 区域（如 road 中央、building 屋顶）的预测是否出现空洞
+- 改变边界 δ 观察 boundary loss 对内部区域一致性的影响
+

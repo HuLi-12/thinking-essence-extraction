@@ -18,10 +18,12 @@ REQUIRED_FILES = {
     "examples/engineering_design_examples.md": "engineering design examples",
     "evals/test_prompts.md": "test prompts",
     "evals/expected_checkpoints.md": "expected checkpoints",
+    "evals/checkpoints.json": "JSON checkpoints for test scoring",
     "docs/anti_patterns.md": "anti-patterns documentation",
     "docs/variable_cards.md": "variable cards",
     "scripts/validate_skill_package.py": "package validator",
     "scripts/check_response_against_checkpoints.py": "test scoring script",
+    "scripts/sync_claude_skill.py": "sync script for .claude SKILL.md copy",
 }
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
@@ -60,7 +62,7 @@ def check_skill_frontmatter() -> List[str]:
     required_sections = [
         "Core Rule",
         "Problem Type Router",
-        "Mandatory Output",
+        "Core Output Requirements",
         "Output Mode Rule",
         "Forbidden Phrases",
         "Variable Table Rule",
@@ -80,6 +82,10 @@ def check_skill_frontmatter() -> List[str]:
     for phrase in forbidden:
         if phrase not in content:
             errors.append(f"SKILL.md: missing forbidden phrase '{phrase}'")
+
+    # Check version field
+    if "version:" not in frontmatter if match else "":
+        errors.append("SKILL.md: frontmatter missing 'version:' field")
 
     return errors
 
@@ -102,6 +108,27 @@ def check_claude_skill_copy() -> List[str]:
         errors.append(
             "MISSING: .claude/skills/thinking-essence-extraction/SKILL.md "
             "(required for Claude Code auto-discovery)"
+        )
+    return errors
+
+
+def check_claude_skill_sync() -> List[str]:
+    """Check root SKILL.md is in sync with .claude copy."""
+    errors = []
+    root_skill = os.path.join(ROOT, "SKILL.md")
+    claude_skill = os.path.join(
+        ROOT, ".claude", "skills", "thinking-essence-extraction", "SKILL.md"
+    )
+    if not os.path.exists(root_skill) or not os.path.exists(claude_skill):
+        return errors
+    with open(root_skill, encoding="utf-8") as f:
+        root_content = f.read()
+    with open(claude_skill, encoding="utf-8") as f:
+        claude_content = f.read()
+    if root_content != claude_content:
+        errors.append(
+            "SYNC_ERROR: root SKILL.md and .claude/skills/thinking-essence-extraction/SKILL.md differ. "
+            "Run `python scripts/sync_claude_skill.py` to sync."
         )
     return errors
 
@@ -135,8 +162,9 @@ def main():
     # 2. Validate SKILL.md content
     errors.extend(check_skill_frontmatter())
 
-    # 3. Check Claude Code skill copy
+    # 3. Check Claude Code skill copy exists and is in sync
     errors.extend(check_claude_skill_copy())
+    errors.extend(check_claude_skill_sync())
 
     # 4. Check for IDE files (advisory only, not blocking)
     warnings = check_no_ide_files()

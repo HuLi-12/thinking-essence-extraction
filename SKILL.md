@@ -1,5 +1,6 @@
 ---
 name: thinking-essence-extraction
+version: 1.3.0
 description: >
   当用户分析技术概念、神经网络模块、论文方法、实验失效、架构设计或工程方案，
   且要求直击本质、拒绝表层解释时使用。该技能强制分析落到变量、机制链、
@@ -69,9 +70,20 @@ description: >
 
 ---
 
-## Mandatory Output
+## Core Output Requirements
 
-默认输出必须包含以下 8 项：
+无论使用哪种输出模式，以下 4 项绝对不能省略：
+
+```text
+变量表
+机制链
+代价交换
+可验证实验
+```
+
+### Full Mode（默认）
+适用于架构审查、论文方法分析（Type B / D）。
+包含以下 8 项：
 
 ```text
 【常见说法】
@@ -84,16 +96,19 @@ description: >
 【对当前模块的启发】
 ```
 
-其中以下 4 项绝对不能省略：
+### Compact Mode
+适用于概念解释、简单机制问题（Type A）。
+包含以下 5 项：
 
 ```text
-变量表
-机制链
-代价交换
-可验证实验
+【真正变化的变量】
+【本质一句话】
+【机制链】
+【代价交换】
+【可验证】
 ```
 
-如果用户要求极简回答，也必须保留这 4 项，只是可以压缩篇幅。
+极简回答也必须保留 4 项核心要素，只是可以压缩篇幅。
 
 ---
 
@@ -112,9 +127,9 @@ description: >
 【可验证】
 ```
 
-### Full Mode
+### Full Mode（默认）
 适用于架构审查、论文方法分析（Type B / D）。
-输出标准 8 段模板（见 Standard Output Template）。
+输出标准 8 段模板（见 Core Output Requirements / Full Mode）。
 
 ### Diagnosis Mode
 适用于实验失败、指标异常、模块无效（Type C）。

@@ -2,6 +2,17 @@
 
 ## v1.3.0 (2026-05-17)
 
+- 解决 Core Output Requirements 与 Output Mode Rule 的冲突
+- 新增 `version` 字段到 SKILL.md frontmatter
+- 新增 `evals/checkpoints.json`（JSON 格式测试检查点）
+- 新增 `scripts/sync_claude_skill.py`（根目录↔.claude 同步脚本）
+- 新增 `.github/workflows/validate.yml`（CI 自动验证）
+- 评分脚本支持 JSON checkpoint 解析和 `--soft` 模式
+- 验证脚本增加 root↔.claude 内容一致性检查和版本号检查
+- 新增 Variable Interaction Cards 2 组：Prototype Count↔Intra-class Variance, Boundary Loss↔Region Consistency
+- 新增工程样例 2 个：秒杀链路、规则上下文
+- 更新 README.md 和 CHANGELOG 结构描述
+
 - 新增 Output Mode Rule（Compact/Full/Diagnosis/Innovation 四模式）
 - 新增 Variable Interaction Cards（7 组变量交换关系）
 - 新增 `CONTRIBUTING.md`（案例贡献规范）
