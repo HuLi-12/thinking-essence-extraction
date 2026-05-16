@@ -37,10 +37,7 @@ thinking-essence-extraction/
 
 ## 使用方式
 
-### Claude Code
 
-本技能已配置为 Claude Code 可发现技能。
-在会话中直接说：
 
 > 用本质变量抽取分析：[你的技术问题]
 
