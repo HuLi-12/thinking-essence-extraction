@@ -270,3 +270,134 @@
 **常见误区**：
 - "用预训练权重初始化就一定比随机初始化好" → 如果下游数据分布与预训练数据差异过大，预训练权重可能成为负迁移
 - 认为 fine-tuning 只影响顶层权重 → 反向传播中浅层权重也会被更新（虽然更新量小于顶层）
+
+---
+
+# Variable Interaction Cards
+
+变量之间的冲突关系。真正的本质分析不是看单变量，而是看变量交换。
+
+---
+
+## H/W ↔ C
+
+**关系**：空间分辨率下降释放 FLOPs 和 activation memory，因此可以增加 C。
+
+**本质**：以空间精度换取通道容量。
+
+**风险**：
+- 边界类下降（空间细节不足以精确定位）
+- 细长结构断裂
+- decoder 负担增加（需要更强的上采样恢复）
+
+**可验证**：
+- 比较不同下采样策略下的 FLOPs 和 activation memory
+- 对比 boundary IoU 与 class-wise IoU 的变化
+- 改变 C 增加值观察边界类的边际收益
+
+---
+
+## ERF ↔ Sampling Density
+
+**关系**：dilation 增大扩大 ERF，但降低局部采样密度。
+
+**本质**：以局部细节密度换取远距离覆盖范围。
+
+**风险**：
+- grid effect（过大 dilation 产生棋盘状空洞）
+- thin object 采样点落在目标外
+- 边界类别被跨类采样污染
+
+**可验证**：
+- scale bucket mIoU 对比（<32px vs >128px）
+- 可视化各分支 ERF 的 stimulation map
+- 计算各 dilation 分支的 effective sampling density
+
+---
+
+## Params ↔ FLOPs
+
+**关系**：参数量由 C 和 K 主导，FLOPs 由 C、K、H/W 共同决定。
+
+**本质**：参数量是模型的记忆容量，FLOPs 是计算吞吐。二者相关但不相同。
+
+**风险**：
+- 大 kernel（7×7）小 C → 高参数量但 FLOPs 可控
+- 小 kernel（3×3）大 C → 高 FLOPs 因 H/W 乘数效应
+- 参数量一致但 FLOPs 差数倍是常见陷阱
+
+**可验证**：
+- 分别计算 Params 和 FLOPs，不要用一个推导另一个
+- 公平对比时必须同时控制 Params 和 FLOPs，或至少明确谁的瓶颈是计算谁的是容量
+
+---
+
+## Decoder Depth ↔ Low-level Noise
+
+**关系**：decoder 越深，边界收益越大，但 low-level feature 的噪声也被放大。
+
+**本质**：以噪声放大风险换取更充分的梯度保留。
+
+**风险**：
+- 超过 2-3 层后边界收益饱和
+- low-level 噪声（原图渗漏、纹理噪音）污染解码结果
+- 内部区域一致性可能随 decoder 深度增加而下降
+
+**可验证**：
+- 对比不同 decoder 深度的 B-IoU 边际收益
+- 可视化 decoder 各层输出中的噪声比例
+- 对比 decoder 在有/无噪声输入下的输出质量差异
+
+---
+
+## Auxiliary Loss ↔ Gradient Conflict
+
+**关系**：辅助损失为浅层提供额外梯度信号，但可能与主损失的梯度方向不一致。
+
+**本质**：以梯度冲突风险换取更充分的浅层梯度更新。
+
+**风险**：
+- 辅助任务与主任务目标不一致时，浅层参数被拉向折中方向
+- 两个损失在浅层的梯度方向夹角超过 90° → 相互抵消
+- 辅助损失的权重 α 需要精细调优
+
+**可验证**：
+- 计算主损失与辅助损失在共享层的 gradient cosine similarity
+- 改变 α 观察梯度方向和 loss curve
+- 绘制两类损失的 Pareto front
+
+---
+
+## Pretrained Preservation ↔ Task Adaptation
+
+**关系**：冻结更多预训练权重能保护预训练特征，但限制了下游任务的适应空间。
+
+**本质**：以特征适应自由度换取预训练知识的保留程度。
+
+**风险**：
+- 冻结 backbone 时，下游新增模块无法通过 backbone 调整特征
+- 全部解冻时，少样本数据可能破坏预训练分布
+- 最佳平衡点取决于下游数据量与预训练数据量的比例
+
+**可验证**：
+- 对比不同 freeze 策略的 backbone feature distribution shift
+- 对比不同 freeze 策略的下游任务准确率
+- 将学习率分解为 backbone_lr 和 head_lr，观察不同比例的收益
+
+---
+
+## mIoU ↔ Class-wise IoU
+
+**关系**：mIoU 是所有类别 IoU 的均值，单一类的大幅提升可掩盖其他类的下降。
+
+**本质**：mIoU 是汇总指标，class-wise IoU 是分布指标。二者之间的差距反映改进是否健康。
+
+**风险**：
+- mIoU 上升但 road/building 下降 → 改进偏向高频类
+- mIoU 不变但 class-wise 方差增大 → 模型稳定性下降
+- 只看 mIoU 会错过类别间的性能转移
+
+**可验证**：
+- 每次实验同时报告 mIoU 和 class-wise IoU，不只看汇总指标
+- 计算类间方差或最差类 IoU 作为辅助评价
+- 用 confusion matrix 检查是否有类别被合并

@@ -12,6 +12,7 @@ REQUIRED_FILES = {
     "SKILL.md": "main skill file",
     "README.md": "project readme",
     "CHANGELOG.md": "version history",
+    "CONTRIBUTING.md": "contribution guidelines",
     "LICENSE": "license file",
     "examples/remote_sensing_segmentation_examples.md": "remote sensing examples",
     "examples/engineering_design_examples.md": "engineering design examples",
@@ -19,7 +20,8 @@ REQUIRED_FILES = {
     "evals/expected_checkpoints.md": "expected checkpoints",
     "docs/anti_patterns.md": "anti-patterns documentation",
     "docs/variable_cards.md": "variable cards",
-    "scripts/validate_skill_package.py": "this validator",
+    "scripts/validate_skill_package.py": "package validator",
+    "scripts/check_response_against_checkpoints.py": "test scoring script",
 }
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
@@ -59,6 +61,7 @@ def check_skill_frontmatter() -> List[str]:
         "Core Rule",
         "Problem Type Router",
         "Mandatory Output",
+        "Output Mode Rule",
         "Forbidden Phrases",
         "Variable Table Rule",
         "Evidence Level Rule",
@@ -103,6 +106,24 @@ def check_claude_skill_copy() -> List[str]:
     return errors
 
 
+def check_no_ide_files() -> List[str]:
+    """Check that IDE files are not committed (should be in .gitignore)."""
+    errors = []
+    idea_dir = os.path.join(ROOT, ".idea")
+    if os.path.exists(idea_dir):
+        # Check if there are tracked files under .idea
+        # This is advisory; actual enforcement is via .gitignore
+        for f in os.listdir(idea_dir):
+            fp = os.path.join(idea_dir, f)
+            if os.path.isfile(fp):
+                rel = os.path.join(".idea", f)
+                errors.append(
+                    f"WARNING: {rel} exists locally. Ensure .gitignore excludes it."
+                )
+                break  # one warning is enough
+    return errors
+
+
 def main():
     errors = []
 
@@ -117,7 +138,10 @@ def main():
     # 3. Check Claude Code skill copy
     errors.extend(check_claude_skill_copy())
 
-    # 4. Summary
+    # 4. Check for IDE files (advisory only, not blocking)
+    warnings = check_no_ide_files()
+
+    # 5. Summary
     if errors:
         print("=== VALIDATION FAILED ===\n")
         for err in errors:
@@ -125,8 +149,12 @@ def main():
         print(f"\n{len(errors)} issue(s) found.")
         sys.exit(1)
     else:
-        print("=== VALIDATION PASSED ===")
+        print("=== VALIDATION PASSED ===\n")
         print("All files present, SKILL.md structure valid, Claude Code copy exists.")
+        if warnings:
+            print("\nWarnings (non-blocking):")
+            for w in warnings:
+                print(f"  - {w}")
         sys.exit(0)
 
 

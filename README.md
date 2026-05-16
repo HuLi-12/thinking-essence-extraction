@@ -9,19 +9,21 @@ thinking-essence-extraction/
 ├── SKILL.md                                    # 主技能文件（执行规则）
 ├── README.md                                   # 本文件
 ├── CHANGELOG.md                                # 版本历史
+├── CONTRIBUTING.md                             # 贡献规范
 ├── LICENSE                                     # 许可证
 ├── .gitignore                                  # Git 忽略规则
 ├── examples/
-│   ├── remote_sensing_segmentation_examples.md # 遥感分割领域正例
-│   └── engineering_design_examples.md          # 工程设计领域正例
+│   ├── remote_sensing_segmentation_examples.md # 遥感分割领域正例（4个）
+│   └── engineering_design_examples.md          # 工程设计领域正例（4个）
 ├── evals/
-│   ├── test_prompts.md                         # 测试用例集
+│   ├── test_prompts.md                         # 测试用例集（9个）
 │   └── expected_checkpoints.md                 # 预期输出检查点
 ├── docs/
-│   ├── anti_patterns.md                        # 错误→修正对照
-│   └── variable_cards.md                       # 变量卡片
+│   ├── anti_patterns.md                        # 错误→修正对照（5组）
+│   └── variable_cards.md                       # 变量卡片（14张+7组交互）
 └── scripts/
-    └── validate_skill_package.py               # 包完整性验证脚本
+    ├── validate_skill_package.py               # 包完整性验证脚本
+    └── check_response_against_checkpoints.py   # 测试评分脚本
 ```
 
 ## 核心设计

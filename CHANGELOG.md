@@ -1,6 +1,14 @@
 # Changelog
 
-## v1.2 (2026-05-16)
+## v1.3.0 (2026-05-17)
+
+- 新增 Output Mode Rule（Compact/Full/Diagnosis/Innovation 四模式）
+- 新增 Variable Interaction Cards（7 组变量交换关系）
+- 新增 `CONTRIBUTING.md`（案例贡献规范）
+- 新增 `check_response_against_checkpoints.py`（测试自动评分脚本）
+- 扩展工程样例：ThreadLocal remove、Redis 随机 TTL、延迟双删一致性
+- 修复 `.claude/skills/thinking-essence-extraction/SKILL.md` 副本缺失
+- 验证脚本增加 .idea 文件检查和 Output Mode Rule 验证
 
 - 新增 Problem Type Router（5 类问题路由）
 - 新增 Evidence Level Rule（事实/推断/假设分层）
