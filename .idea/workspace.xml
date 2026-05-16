@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1beb0b02-c7c7-48d8-bdf7-f2632195784a" name="更改" comment="thinking-essence-extraction" />
+    <list default="true" id="1beb0b02-c7c7-48d8-bdf7-f2632195784a" name="更改" comment="thinking-essence-extraction">
+      <change beforePath="$PROJECT_DIR$/.claude/skills/thinking-essence-extraction/anti_patterns.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/thinking-essence-extraction/remote_sensing_segmentation_examples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/thinking-essence-extraction/test_prompts.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/skills/thinking-essence-extraction/variable_cards.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +111,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778945628544</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="thinking-essence-extraction">
+      <option name="closed" value="true" />
+      <created>1778946067481</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1778946067481</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
