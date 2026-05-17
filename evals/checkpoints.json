@@ -142,5 +142,50 @@
       "因此大目标的分割效果更好"
     ],
     "min_score": 4
+  },
+  "Test 10": {
+    "test_name": "Baseline Evolution——Defect Diagnosis",
+    "required_any": [
+      ["缺陷类型", "Defect", "缺陷"],
+      ["Class Confusion", "边界", "Boundary"],
+      ["实验优先级", "P0", "P1", "P2"],
+      ["候选模块", "模块", "module"],
+      ["修改变量", "变量", "variable"],
+      ["反馈规则", "如果", "If", "观察到"]
+    ],
+    "forbidden": [
+      "提升效果",
+      "加一个"
+    ],
+    "min_score": 4
+  },
+  "Test 11": {
+    "test_name": "Baseline Evolution——Module Selection",
+    "required_any": [
+      ["修改变量", "changed variable", "变量"],
+      ["feature space", "类间距离", "feature 空间"],
+      ["选择依据", "选择", "哪个"],
+      ["最小验证", "验证实验", "最小实验"]
+    ],
+    "forbidden": [
+      "都试一下",
+      "两个都可以"
+    ],
+    "min_score": 3
+  },
+  "Test 12": {
+    "test_name": "Baseline Evolution——Experiment Sequence Design",
+    "required_any": [
+      ["变量变化", "代价", "修改变量"],
+      ["P0", "P1", "P2"],
+      ["反馈规则", "如果", "假设"],
+      ["预期收益", "预期"],
+      ["无用", "无效", "失败信号"]
+    ],
+    "forbidden": [
+      "建议先加",
+      "随意排列"
+    ],
+    "min_score": 4
   }
 }

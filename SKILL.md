@@ -1,6 +1,6 @@
 ---
 name: thinking-essence-extraction
-version: 1.3.0
+version: 1.4.0
 description: >
   当用户分析技术概念、神经网络模块、论文方法、实验失效、架构设计或工程方案，
   且要求直击本质、拒绝表层解释时使用。该技能强制分析落到变量、机制链、
@@ -67,6 +67,14 @@ description: >
 - 为什么唯一索引要包含 deleted 列？
 
 输出重点：数据流、状态变量、一致性约束、失败边界、工程代价。
+
+### Type F: Baseline Evolution
+规划设计 baseline 进化路线。适用于：
+- 当前 baseline 的瓶颈在哪？
+- 应该查什么资料、补什么模块？
+- 魔改方案设计的实验序列是什么？
+
+输出重点：缺陷假设、瓶颈变量、可改造位置、候选模块池、实验优先级、结果反馈规则。
 
 ---
 
@@ -138,6 +146,10 @@ description: >
 ### Innovation Mode
 适用于创新点评价（Type D）。
 使用 Innovation Review Rule 输出格式。
+
+### Evolution Mode
+适用于 Baseline Evolution（Type F）。
+使用 Baseline Evolution Workflow 模板。
 
 ---
 
@@ -526,7 +538,125 @@ small branch 与原 ASPP low-dilation branch 功能重叠
 
 ---
 
-## Domain Reference
+## Literature/Module Search Rule
+
+当为 baseline evolution 搜索文献或模块时，按照以下规则进行。
+
+### 1. Search Around Variables, Not Vague Concepts
+
+错误搜索方向：
+
+```text
+特征融合模块
+语义增强方法
+多尺度上下文
+```
+
+正确搜索方向：
+
+```text
+解决 boundary 定位精度的模块
+控制 ERF 与目标尺度对齐的结构
+处理 class imbalance / class confusion 的 loss
+能增加 feature 类间距离的正则方法
+浅层梯度衰减问题的辅助训练结构
+```
+
+### 2. Map Module to Defect
+
+找到一个候选模块后，必须回答：
+
+- 这个模块解决了我的哪类缺陷？
+- 它改变了哪个具体变量（C, H, W, dilation, loss weight, gradient path...）？
+- 它在原论文中被验证解决的是什么场景下的问题（大目标、小目标、边界、类混淆）？
+- 它的引入代价是什么（参数量、FLOPs、activation memory、训练稳定性）？
+
+### 3. Reject Without Verification
+
+以下情况直接拒绝引入：
+
+- "在 XX 数据集上 SOTA" 但没有说明解决了什么具体变量
+- 只给了整体指标，没有类别级或尺度级分析
+- 模块复杂度远大于当前 baseline 的瓶颈复杂度
+
+### 4. Search Priority
+
+按以下优先级从高到低搜索：
+
+1. 直接改变当前瓶颈变量的模块（如 boundary loss → B-IoU 下降）
+2. 对当前架构改动最小的方案（增量改动优先于重构）
+3. 在类似数据分布上验证过的方案（遥感优先于通用视觉）
+4. 有公开源码和预训练权重的方案
+
+
+## Baseline Evolution Workflow Template
+
+当用户请求规划设计 baseline 进化路线时，使用以下模板。
+
+### 1. Baseline Profile
+
+```text
+当前架构：
+当前 mIoU：
+关键瓶颈（基于已有实验或分析）：
+```
+
+### 2. Defect Hypothesis
+
+列出当前 baseline 最可能存在的缺陷（从 Defect Taxonomy 中选择），
+每个缺陷必须附带证据或推断：
+
+```text
+缺陷类型：
+证据/推断：
+瓶颈变量：
+```
+
+### 3. Candidate Module Pool
+
+针对每个缺陷，推荐候选模块。每个模块必须包含：
+
+```text
+对应缺陷：
+修改变量：
+引入位置：
+代价估算（参数量/FLOPs/显存）：
+最小验证实验：
+```
+
+### 4. Experiment Priority
+
+设计实验序列，按优先级排列：
+
+```text
+P0（必须优先验证的瓶颈假设）：
+  - 实验设计：
+  - 预期收益：
+  - 耗时预估：
+
+P1（如果 P0 验证通过后的下一步）：
+  - 实验设计：
+  - 预期收益：
+
+P2（锦上添花，前提是 P0/P1 通过）：
+  - 实验设计：
+```
+
+### 5. Result Feedback Rule
+
+```text
+如果观察到 [指标变化 A]：
+→ 说明 [假设 B] 成立
+→ 下一步做 [实验 C]
+
+如果观察到 [指标变化 D]：
+→ 说明 [假设 E] 不成立
+→ 切换到 [备选路线 F]
+
+如果观察到 [异常现象 G]：
+→ 回到 Defect Hypothesis 重新诊断
+```
+
 
 分析遥感语义分割、DeepLabV3+、ASPP、decoder、LoveDA、mIoU、class-wise IoU 等问题时，
 参考 `examples/remote_sensing_segmentation_examples.md` 中的案例风格，但**迁移结构，不复用结论**。

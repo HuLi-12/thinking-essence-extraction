@@ -246,6 +246,97 @@ Dilation 增大扩大了感受野，因此大目标的分割效果更好。
 
 ---
 
+---
+
+## Test 10：Baseline Evolution——Defect Diagnosis
+
+### 输入
+
+```text
+用 Baseline Evolution 分析我的 DeepLabV3+（ResNet-50）在 LoveDA 上的 baseline：
+mIoU ~48%，road 和 building 互相误分严重，B-IoU 比 mIoU 低 10 个点。
+请帮我分析当前的瓶颈在哪，下一步应该怎么改进。
+```
+
+### 合格标准
+
+- [ ] 必须使用缺陷分类（从 Defect Taxonomy 中识别匹配的缺陷类型）
+- [ ] 必须给出每类缺陷的证据（不能只说"可能是边界问题"）
+- [ ] 必须推荐候选模块并说明每个模块改变了什么变量
+- [ ] 必须给出实验优先级（P0 > P1 > P2）
+- [ ] 必须给出结果反馈规则（如果观察到 X，则说明 Y）
+
+### 不合格示例
+
+```text
+你的 baseline 主要问题是边界质量不好和类别混淆。建议加一个 attention 模块和
+boundary loss。应该在 decoder 里改。
+```
+
+> 问题：没有缺陷类型匹配、没有具体变量分析、没有实验优先级、没有反馈规则。
+
+---
+
+## Test 11：Baseline Evolution——Module Selection
+
+### 输入
+
+```text
+我的 baseline 是 DeepLabV3+，在 LoveDA 上 road/building 混淆严重。
+我找到两个候选方案：
+A. 加 prototype learning（每个类学一个原型，用 feature 与原型距离分类）
+B. 加 contrastive loss（在 decoder 输出上增加辅助 loss，拉大类间距离）
+这两个方案解决的是同一个变量吗？哪个更值得先试？怎么验证？
+```
+
+### 合格标准
+
+- [ ] 必须使用 Literature/Module Search Rule 分析两个方案改变了哪个变量
+- [ ] 必须指出两个方案是否指向同一变量（feature space 类间距离）
+- [ ] 必须给出选择依据（改动幅度、实现复杂度、可验证性）
+- [ ] 必须给出最小验证实验，而不是"两个都试"
+
+### 不合格示例
+
+```text
+两个方案都可以提升特征区分度。建议都试一下看哪个效果好。
+```
+
+> 问题：没有分析共享变量、没有选择逻辑、"都试一下"不是实验设计。
+
+---
+
+## Test 12：Baseline Evolution——Experiment Sequence Design
+
+### 输入
+
+```text
+我计划对 DeepLabV3+ LoveDA baseline 做以下改进：
+1. Decoder 替换为 MLP decoder（参考 SegFormer）
+2. Boundary loss
+3. 增加一个 non-local block
+
+这三个改进的优先级应该怎么排？哪个最可能先出效果？怎么设计实验序列？
+```
+
+### 合格标准
+
+- [ ] 必须分析每个改动的变量变化和代价
+- [ ] 必须判断哪个改动和当前瓶颈最相关（不是随意排列）
+- [ ] 必须设计 P0 > P1 > P2 实验序列
+- [ ] 必须有反馈规则：如果某步无效，下一步怎么调整
+- [ ] 必须有预期收益和失败信号的对应关系
+
+### 不合格示例
+
+```text
+建议先加 non-local block，因为能捕获全局上下文，mIoU 应该能提升 1-2%。
+然后加 MLP decoder 和 boundary loss。
+```
+
+> 问题：没有变量分析、没有设计 P0 验证瓶颈假设、没有反馈规则。
+
+
 ## 测试执行记录
 
 | 测试编号 | 测试日期 | 结果 (PASS/FAIL) | 失败原因 | 修复动作 |
@@ -259,3 +350,6 @@ Dilation 增大扩大了感受野，因此大目标的分割效果更好。
 | Test 7 | | | | |
 | Test 8 | | | | |
 | Test 9 | | | | |
+| Test 10 | | | | |
+| Test 11 | | | | |
+| Test 12 | | | | |

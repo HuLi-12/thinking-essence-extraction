@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.4.0 (2026-05-17)
+
+- 新增 Type F: Baseline Evolution 到 Problem Type Router
+- 新增 Evolution Mode 到 Output Mode Rule
+- 新增 Literature/Module Search Rule（按变量搜索而非抽象概念搜索）
+- 新增 Baseline Evolution Workflow Template（P0/P1/P2 实验序列）
+- 新增 `docs/baseline_defect_taxonomy.md`（10 类 baseline 缺陷类型）
+- 新增 `docs/module_cards.md`（15 个模块卡片，标准化模板）
+- 新增 `examples/baseline_evolution_examples.md`（2 个完整进化路线示例）
+- 新增 Test 10-12 到 `evals/test_prompts.md` 和 `evals/checkpoints.json`
+- 更新 `scripts/validate_skill_package.py`（新增 v1.4.0 文件清单和章节检查）
+
 ## v1.3.0 (2026-05-17)
 
 - 解决 Core Output Requirements 与 Output Mode Rule 的冲突

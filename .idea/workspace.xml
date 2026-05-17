@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1beb0b02-c7c7-48d8-bdf7-f2632195784a" name="更改" comment="thinking-essence-extraction">
-      <change afterPath="$PROJECT_DIR$/.claude/skills/thinking-essence-extraction/SKILL.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CONTRIBUTING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/check_response_against_checkpoints.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/SKILL.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/variable_cards.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/variable_cards.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/engineering_design_examples.md" beforeDir="false" afterPath="$PROJECT_DIR$/examples/engineering_design_examples.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/validate_skill_package.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/validate_skill_package.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +114,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778948094345</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="thinking-essence-extraction">
+      <option name="closed" value="true" />
+      <created>1778948465397</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1778948465397</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

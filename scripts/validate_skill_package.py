@@ -24,6 +24,9 @@ REQUIRED_FILES = {
     "scripts/validate_skill_package.py": "package validator",
     "scripts/check_response_against_checkpoints.py": "test scoring script",
     "scripts/sync_claude_skill.py": "sync script for .claude SKILL.md copy",
+    "docs/baseline_defect_taxonomy.md": "baseline defect taxonomy (10 types)",
+    "docs/module_cards.md": "module cards (15 modules)",
+    "examples/baseline_evolution_examples.md": "baseline evolution examples",
 }
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
@@ -72,6 +75,8 @@ def check_skill_frontmatter() -> List[str]:
         "Verifiable Hypothesis Rule",
         "Standard Output Template",
         "Anti-pattern Self-check",
+        "Literature/Module Search Rule",
+        "Baseline Evolution Workflow Template",
     ]
     for section in required_sections:
         if f"## {section}" not in content:
