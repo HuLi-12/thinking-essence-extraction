@@ -14,14 +14,14 @@ New-Item -ItemType Directory -Force -Path "$codexDir\docs" | Out-Null
 New-Item -ItemType Directory -Force -Path "$codexDir\examples" | Out-Null
 New-Item -ItemType Directory -Force -Path "$codexDir\evals" | Out-Null
 
-Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/SKILL.md" -OutFile "$codexDir\SKILL.md"
+Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/skills/thinking-essence-extraction/SKILL.md" -OutFile "$codexDir\SKILL.md"
 @("variable_cards.md","anti_patterns.md","baseline_defect_taxonomy.md","module_cards.md","baseline_evolution_workflow.md") | ForEach-Object {
-    Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/docs/$_" -OutFile "$codexDir\docs\$_"
+    Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/skills/thinking-essence-extraction/docs/$_" -OutFile "$codexDir\docs\$_"
 }
 @("remote_sensing_segmentation_examples.md","engineering_design_examples.md","baseline_evolution_examples.md") | ForEach-Object {
-    Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/examples/$_" -OutFile "$codexDir\examples\$_"
+    Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/skills/thinking-essence-extraction/examples/$_" -OutFile "$codexDir\examples\$_"
 }
-Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/evals/checkpoints.json" -OutFile "$codexDir\evals\checkpoints.json"
-Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/AGENTS.md" -OutFile "$Target\AGENTS.md"
+Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/skills/thinking-essence-extraction/evals/checkpoints.json" -OutFile "$codexDir\evals\checkpoints.json"
+Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/wrappers/codex/AGENTS.md" -OutFile "$Target\AGENTS.md"
 
 Write-Host "Done. Test with: codex ""用本质变量抽取分析：1×1 卷积的本质是什么？""" -ForegroundColor Cyan

@@ -9,38 +9,50 @@ from typing import List
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 REQUIRED_FILES = {
-    "SKILL.md": "main skill file",
-    "README.md": "project readme",
+    # Root level
+    "README.md": "registry readme",
+    "install.md": "installation guide",
     "CHANGELOG.md": "version history",
     "CONTRIBUTING.md": "contribution guidelines",
     "LICENSE": "license file",
-    "examples/remote_sensing_segmentation_examples.md": "remote sensing examples",
-    "examples/engineering_design_examples.md": "engineering design examples",
-    "evals/test_prompts.md": "test prompts",
-    "evals/expected_checkpoints.md": "expected checkpoints",
-    "evals/checkpoints.json": "JSON checkpoints for test scoring",
-    "docs/anti_patterns.md": "anti-patterns documentation",
-    "docs/variable_cards.md": "variable cards",
+    # Skill unit
+    "skills/thinking-essence-extraction/README.md": "skill readme",
+    "skills/thinking-essence-extraction/SKILL.md": "main skill file",
+    "skills/thinking-essence-extraction/docs/variable_cards.md": "variable cards",
+    "skills/thinking-essence-extraction/docs/anti_patterns.md": "anti-patterns",
+    "skills/thinking-essence-extraction/docs/baseline_defect_taxonomy.md": "baseline defect taxonomy",
+    "skills/thinking-essence-extraction/docs/module_cards.md": "module cards",
+    "skills/thinking-essence-extraction/docs/baseline_evolution_workflow.md": "baseline evolution workflow",
+    "skills/thinking-essence-extraction/examples/remote_sensing_segmentation_examples.md": "remote sensing examples",
+    "skills/thinking-essence-extraction/examples/engineering_design_examples.md": "engineering design examples",
+    "skills/thinking-essence-extraction/examples/baseline_evolution_examples.md": "baseline evolution examples",
+    "skills/thinking-essence-extraction/evals/test_prompts.md": "test prompts",
+    "skills/thinking-essence-extraction/evals/expected_checkpoints.md": "expected checkpoints",
+    "skills/thinking-essence-extraction/evals/checkpoints.json": "JSON checkpoints",
+    # Wrappers
+    "wrappers/codex/AGENTS.md": "Codex agent manifest",
+    "wrappers/claude/subagent.md": "Claude subagent wrapper",
+    "wrappers/claude/command.md": "Claude slash command wrapper",
+    # Scripts
     "scripts/validate_skill_package.py": "package validator",
     "scripts/check_response_against_checkpoints.py": "test scoring script",
-    "scripts/sync_claude_skill.py": "sync script for .claude SKILL.md copy",
-    "docs/baseline_defect_taxonomy.md": "baseline defect taxonomy (10 types)",
-    "docs/module_cards.md": "module cards (15 modules)",
-    "docs/baseline_evolution_workflow.md": "baseline evolution workflow",
-    "examples/baseline_evolution_examples.md": "baseline evolution examples",
-    "AGENTS.md": "Codex agent manifest",
-    "CLAUDE.md": "Claude project entry",
-    "install/install.sh": "Unix install script",
-    "install/install.ps1": "Windows install script",
-    "install/install_codex.sh": "Codex Unix install",
-    "install/install_codex.ps1": "Codex Windows install",
-    "install/install_claude.sh": "Claude Unix install",
-    "install/install_claude.ps1": "Claude Windows install",
-    "install/README.md": "install guide",
-    "install/verify_installation.py": "install verification script",
+    # CI
+    ".github/workflows/validate.yml": "CI validation workflow",
     ".github/workflows/release.yml": "GitHub release workflow",
-    ".codex/skills/thinking-essence-extraction/SKILL.md": "Codex skill copy",
 }
+
+OPTIONAL_FILES = {
+    "install/install.sh": "Unix install script (optional)",
+    "install/install.ps1": "Windows install script (optional)",
+    "install/install_codex.sh": "Codex Unix install (optional)",
+    "install/install_codex.ps1": "Codex Windows install (optional)",
+    "install/install_claude.sh": "Claude Unix install (optional)",
+    "install/install_claude.ps1": "Claude Windows install (optional)",
+    "install/README.md": "install scripts guide (optional)",
+    "install/verify_installation.py": "install verification script (optional)",
+}
+
+SKILL_MD_PATH = os.path.join(ROOT, "skills", "thinking-essence-extraction", "SKILL.md")
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
 
@@ -57,11 +69,10 @@ def check_file_exists(rel_path: str, description: str) -> List[str]:
 
 def check_skill_frontmatter() -> List[str]:
     errors = []
-    skill_path = os.path.join(ROOT, "SKILL.md")
-    if not os.path.exists(skill_path):
-        return ["MISSING: SKILL.md (cannot check frontmatter)"]
+    if not os.path.exists(SKILL_MD_PATH):
+        return ["MISSING: skills/thinking-essence-extraction/SKILL.md (cannot check frontmatter)"]
 
-    with open(skill_path, encoding="utf-8") as f:
+    with open(SKILL_MD_PATH, encoding="utf-8") as f:
         content = f.read()
 
     match = FRONTMATTER_RE.match(content)
@@ -73,6 +84,8 @@ def check_skill_frontmatter() -> List[str]:
             errors.append("SKILL.md: frontmatter missing 'name:' field")
         if "description:" not in frontmatter:
             errors.append("SKILL.md: frontmatter missing 'description:' field")
+        if "version:" not in frontmatter:
+            errors.append("SKILL.md: frontmatter missing 'version:' field")
 
     # Check essential sections
     required_sections = [
@@ -90,6 +103,7 @@ def check_skill_frontmatter() -> List[str]:
         "Anti-pattern Self-check",
         "Literature/Module Search Rule",
         "Baseline Evolution Rule",
+        "Domain Reference",
     ]
     for section in required_sections:
         if f"## {section}" not in content:
@@ -100,10 +114,6 @@ def check_skill_frontmatter() -> List[str]:
     for phrase in forbidden:
         if phrase not in content:
             errors.append(f"SKILL.md: missing forbidden phrase '{phrase}'")
-
-    # Check version field
-    if "version:" not in frontmatter if match else "":
-        errors.append("SKILL.md: frontmatter missing 'version:' field")
 
     return errors
 
@@ -116,48 +126,11 @@ def check_file_nonempty(rel_path: str, min_chars: int = 100) -> List[str]:
     return errors
 
 
-def check_claude_skill_copy() -> List[str]:
-    """Check that SKILL.md is available at .claude/skills/ for auto-discovery."""
-    errors = []
-    claude_skill = os.path.join(
-        ROOT, ".claude", "skills", "thinking-essence-extraction", "SKILL.md"
-    )
-    if not os.path.exists(claude_skill):
-        errors.append(
-            "MISSING: .claude/skills/thinking-essence-extraction/SKILL.md "
-            "(required for Claude Code auto-discovery)"
-        )
-    return errors
-
-
-def check_claude_skill_sync() -> List[str]:
-    """Check root SKILL.md is in sync with .claude copy."""
-    errors = []
-    root_skill = os.path.join(ROOT, "SKILL.md")
-    claude_skill = os.path.join(
-        ROOT, ".claude", "skills", "thinking-essence-extraction", "SKILL.md"
-    )
-    if not os.path.exists(root_skill) or not os.path.exists(claude_skill):
-        return errors
-    with open(root_skill, encoding="utf-8") as f:
-        root_content = f.read()
-    with open(claude_skill, encoding="utf-8") as f:
-        claude_content = f.read()
-    if root_content != claude_content:
-        errors.append(
-            "SYNC_ERROR: root SKILL.md and .claude/skills/thinking-essence-extraction/SKILL.md differ. "
-            "Run `python scripts/sync_claude_skill.py` to sync."
-        )
-    return errors
-
-
 def check_no_ide_files() -> List[str]:
     """Check that IDE files are not committed (should be in .gitignore)."""
     errors = []
     idea_dir = os.path.join(ROOT, ".idea")
     if os.path.exists(idea_dir):
-        # Check if there are tracked files under .idea
-        # This is advisory; actual enforcement is via .gitignore
         for f in os.listdir(idea_dir):
             fp = os.path.join(idea_dir, f)
             if os.path.isfile(fp):
@@ -165,7 +138,7 @@ def check_no_ide_files() -> List[str]:
                 errors.append(
                     f"WARNING: {rel} exists locally. Ensure .gitignore excludes it."
                 )
-                break  # one warning is enough
+                break
     return errors
 
 
@@ -177,15 +150,18 @@ def main():
         errors.extend(check_file_exists(rel_path, description))
         errors.extend(check_file_nonempty(rel_path))
 
-    # 2. Validate SKILL.md content
+    # 2. Check optional files (warn, not fail)
+    warnings = []
+    for rel_path, description in OPTIONAL_FILES.items():
+        errs = check_file_exists(rel_path, description)
+        if errs:
+            warnings.extend(errs)
+
+    # 3. Validate SKILL.md content
     errors.extend(check_skill_frontmatter())
 
-    # 3. Check Claude Code skill copy exists and is in sync
-    errors.extend(check_claude_skill_copy())
-    errors.extend(check_claude_skill_sync())
-
-    # 4. Check for IDE files (advisory only, not blocking)
-    warnings = check_no_ide_files()
+    # 4. Check for IDE files
+    warnings.extend(check_no_ide_files())
 
     # 5. Summary
     if errors:
@@ -196,7 +172,7 @@ def main():
         sys.exit(1)
     else:
         print("=== VALIDATION PASSED ===\n")
-        print("All files present, SKILL.md structure valid, Claude Code copy exists.")
+        print("All required files present, SKILL.md structure valid.")
         if warnings:
             print("\nWarnings (non-blocking):")
             for w in warnings:

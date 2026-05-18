@@ -14,7 +14,7 @@ from typing import List, Dict, Any, Tuple
 
 CHECKPOINTS_JSON = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "evals", "checkpoints.json"
+    "skills", "thinking-essence-extraction", "evals", "checkpoints.json"
 )
 
 

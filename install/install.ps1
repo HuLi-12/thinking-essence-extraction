@@ -31,9 +31,9 @@ Write-Host "  Codex files installed."
 Write-Host "[2/4] Installing Claude files..."
 $claudeDir = "$Target\.claude\skills\thinking-essence-extraction"
 New-Item -ItemType Directory -Force -Path $claudeDir | Out-Null
-Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/.claude/skills/thinking-essence-extraction/SKILL.md" `
+Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/skills/thinking-essence-extraction/SKILL.md" `
     -OutFile "$claudeDir\SKILL.md"
-Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/CLAUDE.md" -OutFile "$Target\CLAUDE.md"
+Invoke-WebRequest -Uri "$RepoUrl/raw/$Branch/wrappers/claude/subagent.md" -OutFile "$Target\CLAUDE.md"
 Write-Host "  Claude files installed."
 
 # --- Verify ---

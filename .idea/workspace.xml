@@ -5,16 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1beb0b02-c7c7-48d8-bdf7-f2632195784a" name="更改" comment="thinking-essence-extraction">
+      <change beforePath="$PROJECT_DIR$/.claude/skills/thinking-essence-extraction/SKILL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/SKILL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/docs/anti_patterns.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/docs/baseline_defect_taxonomy.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/docs/baseline_evolution_workflow.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/docs/module_cards.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/docs/variable_cards.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/evals/checkpoints.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/examples/baseline_evolution_examples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/examples/engineering_design_examples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.codex/skills/thinking-essence-extraction/examples/remote_sensing_segmentation_examples.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/install.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/install/install.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/install_claude.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/install/install_claude.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/install_claude.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/install_claude.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/install_codex.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/install/install_codex.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/install_codex.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/install_codex.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/verify_installation.py" beforeDir="false" afterPath="$PROJECT_DIR$/install/verify_installation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SKILL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/anti_patterns.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/baseline_defect_taxonomy.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/baseline_evolution_workflow.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/module_cards.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/variable_cards.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evals/checkpoints.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evals/expected_checkpoints.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evals/test_prompts.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/baseline_evolution_examples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/engineering_design_examples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/remote_sensing_segmentation_examples.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779072893475</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="thinking-essence-extraction">
+      <option name="closed" value="true" />
+      <created>1779074343866</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1779074343866</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

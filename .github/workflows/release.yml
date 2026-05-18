@@ -22,44 +22,13 @@ jobs:
       - name: Validate package
         run: python scripts/validate_skill_package.py
 
-      - name: Create skill package zip
+      - name: Create release zip
         run: |
-          TMP_DIR=$(mktemp -d)
-          PKG_DIR="$TMP_DIR/thinking-essence-extraction"
-          mkdir -p "$PKG_DIR/.codex/skills/thinking-essence-extraction/docs"
-          mkdir -p "$PKG_DIR/.codex/skills/thinking-essence-extraction/examples"
-          mkdir -p "$PKG_DIR/.codex/skills/thinking-essence-extraction/evals"
-          mkdir -p "$PKG_DIR/.claude/skills/thinking-essence-extraction"
-          mkdir -p "$PKG_DIR/docs"
-          mkdir -p "$PKG_DIR/examples"
-          mkdir -p "$PKG_DIR/install"
-
-          # Core files
-          cp SKILL.md AGENTS.md CLAUDE.md "$PKG_DIR/"
-
-          # Codex structure
-          cp SKILL.md "$PKG_DIR/.codex/skills/thinking-essence-extraction/"
-          cp docs/*.md "$PKG_DIR/.codex/skills/thinking-essence-extraction/docs/"
-          cp examples/*.md "$PKG_DIR/.codex/skills/thinking-essence-extraction/examples/"
-          cp evals/checkpoints.json "$PKG_DIR/.codex/skills/thinking-essence-extraction/evals/"
-
-          # Claude structure
-          cp .claude/skills/thinking-essence-extraction/SKILL.md "$PKG_DIR/.claude/skills/thinking-essence-extraction/"
-
-          # Docs & examples (for reference)
-          cp docs/*.md "$PKG_DIR/docs/"
-          cp examples/*.md "$PKG_DIR/examples/"
-
-          # Install scripts
-          cp install/*.sh install/*.ps1 install/*.py "$PKG_DIR/install/"
-
-          # README, CHANGELOG, LICENSE
-          cp README.md CHANGELOG.md CONTRIBUTING.md LICENSE "$PKG_DIR/"
-
-          # Create zip
-          cd "$TMP_DIR"
-          zip -r "thinking-essence-extraction.zip" "thinking-essence-extraction/"
-          mv "thinking-essence-extraction.zip" "$GITHUB_WORKSPACE/"
+          # Package the full repository — the skill folder is the install unit
+          cd "$GITHUB_WORKSPACE"
+          zip -r "thinking-essence-extraction.zip" \
+            README.md install.md CHANGELOG.md CONTRIBUTING.md LICENSE \
+            skills/ wrappers/ scripts/ install/ .github/workflows/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
