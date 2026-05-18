@@ -10,9 +10,11 @@ cd thinking-essence-extraction
 # === Codex CLI ===
 
 # 全局安装
+mkdir -p ~/.codex/skills
 cp -R skills/thinking-essence-extraction ~/.codex/skills/
 
 # 项目级安装
+mkdir -p /path/to/project/.codex/skills
 cp -R skills/thinking-essence-extraction /path/to/project/.codex/skills/
 
 # Codex 项目入口（可选）
@@ -46,14 +48,14 @@ Use `thinking-essence-extraction` for technical analysis of deep learning archit
 
 ### 方式 C：Slash command（快捷入口）
 
-将 `wrappers/claude/command.md` 中的 JSON 片段加入 `~/.claude/commands.json`：
+将 `wrappers/claude/command.md` 直接复制到 commands 目录：
 
 ```bash
-# 将 command.md 中的 commands 对象合并到 ~/.claude/commands.json 的 commands 字段
+mkdir -p ~/.claude/commands
+cp wrappers/claude/command.md ~/.claude/commands/essence.md
 ```
 
 用法：`/essence 用本质变量抽取分析：ASPP 中不同 dilation 起了什么作用？`
-```
 
 ## 验证安装
 

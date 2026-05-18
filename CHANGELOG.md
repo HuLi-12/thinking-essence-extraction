@@ -2,17 +2,20 @@
 
 ## v1.5.0 (2026-05-18)
 
-- 新增 AGENTS.md（Codex agent 清单，开箱即用）
-- 新增 CLAUDE.md（Claude Code 项目级入口）
-- 新增 `.codex/skills/thinking-essence-extraction/` 结构（Codex 直接安装副本）
-- 新增 `install/` 目录（7 个安装脚本 + 验证脚本）
-  - `install.sh` / `install.ps1`：全量安装（Codex + Claude）
-  - `install_codex.sh` / `install_codex.ps1`：Codex 专用安装
-  - `install_claude.sh` / `install_claude.ps1`：Claude 专用安装
-  - `verify_installation.py`：安装完整性验证
+### Structural: nature-skills registry layout
+
+- 仓库从"安装器型"重构为 **skills 目录型 skill registry**
+- 新增 `skills/thinking-essence-extraction/` 技能本体目录（内含 README, SKILL.md, docs/, examples/, evals/）
+- 新增 `wrappers/` 适配层目录
+  - `wrappers/codex/AGENTS.md` — Codex agent 清单（支持全局/项目级路径）
+  - `wrappers/claude/subagent.md` — Claude subagent（YAML frontmatter，可直接放入 `~/.claude/agents/`）
+  - `wrappers/claude/command.md` — Claude slash command（可直接放入 `~/.claude/commands/`）
+- 新增 `install.md` — 手动安装说明（推荐 `cp -R` 而非 curl pipe bash）
+- 根目录 `AGENTS.md`, `CLAUDE.md`, `SKILL.md`, `.codex/`, `.claude/` 全部移除
+- 根 README.md 重写为 registry 索引风格（skills 表格 + Quick Install + 禁止只复制 SKILL.md 警告）
+- `scripts/validate_skill_package.py` 重写：检查 skills/, wrappers/, 移除旧结构检查
+- `scripts/check_response_against_checkpoints.py` 更新路径
 - 新增 `.github/workflows/release.yml`（tag 触发 zip 打包 + GitHub Release）
-- README.md 重写为 Quick Install 优先结构（Codex / Claude / Manual / Windows 四通道）
-- 更新 validate_skill_package.py（新增 AGENTS.md、CLAUDE.md、install/、.codex/、release.yml）
 
 ## v1.4.1 (2026-05-18)
 

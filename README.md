@@ -15,7 +15,8 @@
 git clone https://github.com/HuLi-12/thinking-essence-extraction.git
 cd thinking-essence-extraction
 
-# Copy the entire skill folder — this is the install unit
+# Ensure target dir exists, then copy the entire skill folder
+mkdir -p ~/.codex/skills
 cp -R skills/thinking-essence-extraction ~/.codex/skills/
 ```
 
@@ -55,6 +56,23 @@ thinking-essence-extraction/
 └── .github/workflows/
     ├── validate.yml                   # CI 自动验证
     └── release.yml                    # Release 打包
+```
+
+## Usage Examples
+
+```text
+# Codex
+codex "用本质变量抽取分析：1×1 卷积的本质是什么？"
+
+# Claude (subagent)
+claude "Use thinking-essence-extraction to analyze: 1×1 convolution essence"
+
+# Claude (slash command)
+/essence 用本质变量抽取分析：ASPP 中不同 dilation 起了什么作用？
+
+# Manual / Other agents
+Read skills/thinking-essence-extraction/SKILL.md for full methodology.
+Apply Core Rule to any technical analysis question.
 ```
 
 ## Development
