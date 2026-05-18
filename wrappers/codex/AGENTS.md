@@ -13,17 +13,44 @@ Reject surface-level explanations. Every analysis must land on:
 
 ## Installation
 
-This agent loads the full skill definition from:
+### Global install (all projects)
+
+```bash
+cp -R skills/thinking-essence-extraction ~/.codex/skills/
+```
+
+Then copy this AGENTS.md to each project where you want the skill active:
+
+```bash
+cp wrappers/codex/AGENTS.md /path/to/project/AGENTS.md
+```
+
+The skill definition will be loaded from:
+
+```
+~/.codex/skills/thinking-essence-extraction/SKILL.md
+```
+
+### Project-level install (single project)
+
+```bash
+cp -R skills/thinking-essence-extraction /path/to/project/.codex/skills/
+cp wrappers/codex/AGENTS.md /path/to/project/AGENTS.md
+```
+
+The skill definition will be loaded from:
 
 ```
 .codex/skills/thinking-essence-extraction/SKILL.md
 ```
 
-All supporting reference files are at:
+### Reference files
 
-- `.codex/skills/thinking-essence-extraction/docs/` — Variable cards, defect taxonomy, module cards, workflow
-- `.codex/skills/thinking-essence-extraction/examples/` — Domain examples
-- `.codex/skills/thinking-essence-extraction/evals/` — Test checkpoints
+All supporting files are at the same base as SKILL.md:
+
+- `docs/` — Variable cards, defect taxonomy, module cards, workflow
+- `examples/` — Domain examples
+- `evals/` — Test checkpoints
 
 ## Forbidden Explanations
 

@@ -20,14 +20,39 @@ cp wrappers/codex/AGENTS.md /path/to/project/AGENTS.md
 
 # === Claude Code ===
 
-# 安装 skill
+### 方式 A：项目级 skill 文件夹（推荐）
+
+```bash
+mkdir -p /path/to/project/.claude/skills
 cp -R skills/thinking-essence-extraction /path/to/project/.claude/skills/
+```
 
-# 使用 subagent wrapper（可选）
-cp wrappers/claude/subagent.md /path/to/project/
+Claude Code 会自动发现 `.claude/skills/` 下的 skill 文件。
 
-# 或配置为 slash command（高级）
-# 将 wrappers/claude/command.md 中的 JSON 加入 ~/.claude/commands.json
+### 方式 B：用户级 subagent（多项目共享）
+
+```bash
+mkdir -p ~/.claude/agents
+cp wrappers/claude/subagent.md ~/.claude/agents/thinking-essence-extraction.md
+```
+
+然后在项目 `CLAUDE.md` 中引用：
+
+```markdown
+## Subagents
+
+Use `thinking-essence-extraction` for technical analysis of deep learning architectures.
+```
+
+### 方式 C：Slash command（快捷入口）
+
+将 `wrappers/claude/command.md` 中的 JSON 片段加入 `~/.claude/commands.json`：
+
+```bash
+# 将 command.md 中的 commands 对象合并到 ~/.claude/commands.json 的 commands 字段
+```
+
+用法：`/essence 用本质变量抽取分析：ASPP 中不同 dilation 起了什么作用？`
 ```
 
 ## 验证安装

@@ -15,11 +15,13 @@
 git clone https://github.com/HuLi-12/thinking-essence-extraction.git
 cd thinking-essence-extraction
 
-# Copy entire skill folder to your agent
+# Copy the entire skill folder — this is the install unit
 cp -R skills/thinking-essence-extraction ~/.codex/skills/
 ```
 
-详细安装方式（Codex、Claude、项目级、Windows）见 [install.md](install.md)。
+> **不要只复制 SKILL.md。** SKILL.md 通过相对路径引用 docs/examples/evals，必须复制完整目录才能正常工作。
+
+详细安装方式（全局/项目级、Codex/Claude、Windows）见 [install.md](install.md)。
 
 ## Repository Structure
 
@@ -41,18 +43,14 @@ thinking-essence-extraction/
 │
 ├── wrappers/
 │   ├── codex/
-│   │   └── AGENTS.md                  # Codex 项目级 wrapper
+│   │   └── AGENTS.md                  # Codex wrapper（全局/项目级）
 │   └── claude/
 │       ├── subagent.md                # Claude subagent wrapper
 │       └── command.md                 # Claude slash command wrapper
 │
 ├── scripts/
 │   ├── validate_skill_package.py      # 包完整性验证
-│   ├── check_response_against_checkpoints.py  # 测试评分
-│   └── sync_claude_skill.py           # .claude 同步（已废弃）
-│
-├── install/
-│   └── ...                            # 可选安装辅助脚本
+│   └── check_response_against_checkpoints.py  # 测试评分
 │
 └── .github/workflows/
     ├── validate.yml                   # CI 自动验证
