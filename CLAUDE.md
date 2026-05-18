@@ -10,10 +10,10 @@ To install in a new project:
 
 ```bash
 # Unix
-curl -sL https://raw.githubusercontent.com/<your-org>/thinking-essence-extraction/main/install/install_claude.sh | bash
+curl -sL https://raw.githubusercontent.com/HuLi-12/thinking-essence-extraction/master/install/install_claude.sh | bash
 
 # Windows PowerShell
-iex "& { $(irm https://raw.githubusercontent.com/<your-org>/thinking-essence-extraction/main/install/install_claude.ps1) }"
+iex "& { $(irm https://raw.githubusercontent.com/HuLi-12/thinking-essence-extraction/master/install/install_claude.ps1) }"
 ```
 
 ## Usage
@@ -39,13 +39,13 @@ Every technical analysis will include:
 3. **Cost Trade-off** — "At the cost of X, in exchange for Y, at risk of Z"
 4. **Verifiable Hypothesis** — At least 1 falsifiable experiment design
 
-## Reference files
+## Reference files (installed path)
 
-- `docs/variable_cards.md` — Variable definitions and interaction cards
-- `docs/anti_patterns.md` — Common explanation errors
-- `docs/baseline_defect_taxonomy.md` — 10 types of baseline defects
-- `docs/module_cards.md` — 15 module analysis cards
-- `docs/baseline_evolution_workflow.md` — Baseline evolution workflow
-- `examples/remote_sensing_segmentation_examples.md` — Remote sensing examples
-- `examples/engineering_design_examples.md` — Engineering design examples
-- `examples/baseline_evolution_examples.md` — Baseline evolution examples
+- `.claude/skills/thinking-essence-extraction/docs/variable_cards.md` — Variable definitions and interaction cards
+- `.claude/skills/thinking-essence-extraction/docs/anti_patterns.md` — Common explanation errors
+- `.claude/skills/thinking-essence-extraction/docs/baseline_defect_taxonomy.md` — 10 types of baseline defects
+- `.claude/skills/thinking-essence-extraction/docs/module_cards.md` — 15 module analysis cards
+- `.claude/skills/thinking-essence-extraction/docs/baseline_evolution_workflow.md` — Baseline evolution workflow
+- `.claude/skills/thinking-essence-extraction/examples/remote_sensing_segmentation_examples.md` — Remote sensing examples
+- `.claude/skills/thinking-essence-extraction/examples/engineering_design_examples.md` — Engineering design examples
+- `.claude/skills/thinking-essence-extraction/examples/baseline_evolution_examples.md` — Baseline evolution examples

@@ -11,7 +11,7 @@
 
 ```bash
 # 从本仓库安装到当前项目
-curl -sL https://raw.githubusercontent.com/<your-org>/thinking-essence-extraction/main/install/install_codex.sh | bash
+curl -sL https://raw.githubusercontent.com/HuLi-12/thinking-essence-extraction/master/install/install_codex.sh | bash
 
 # 或手动复制
 cp AGENTS.md /path/to/your-project/
@@ -28,7 +28,7 @@ codex "用本质变量抽取分析：DeepLabV3+ 的 ASPP 是什么原理？"
 
 ```bash
 # 从本仓库安装到当前项目
-curl -sL https://raw.githubusercontent.com/<your-org>/thinking-essence-extraction/main/install/install_claude.sh | bash
+curl -sL https://raw.githubusercontent.com/HuLi-12/thinking-essence-extraction/master/install/install_claude.sh | bash
 
 # 或手动复制
 cp CLAUDE.md /path/to/your-project/
@@ -56,10 +56,10 @@ claude "用本质变量抽取分析：DeepLabV3+ 的 ASPP 是什么原理？"
 
 ```powershell
 # Codex
-iex "& { $(irm https://raw.githubusercontent.com/<your-org>/thinking-essence-extraction/main/install/install_codex.ps1) }"
+iex "& { $(irm https://raw.githubusercontent.com/HuLi-12/thinking-essence-extraction/master/install/install_codex.ps1) }"
 
 # Claude
-iex "& { $(irm https://raw.githubusercontent.com/<your-org>/thinking-essence-extraction/main/install/install_claude.ps1) }"
+iex "& { $(irm https://raw.githubusercontent.com/HuLi-12/thinking-essence-extraction/master/install/install_claude.ps1) }"
 ```
 
 ---
@@ -140,6 +140,8 @@ thinking-essence-extraction/
 └── .github/workflows/
     ├── validate.yml                 # CI 自动验证
     └── release.yml                  # Release 打包
+
+> 完整结构以 `scripts/validate_skill_package.py` 中 `REQUIRED_FILES` 为准。
 ```
 
 ---

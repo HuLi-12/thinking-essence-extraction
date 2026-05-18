@@ -36,6 +36,7 @@ REQUIRED_FILES = {
     "install/install_codex.ps1": "Codex Windows install",
     "install/install_claude.sh": "Claude Unix install",
     "install/install_claude.ps1": "Claude Windows install",
+    "install/README.md": "install guide",
     "install/verify_installation.py": "install verification script",
     ".github/workflows/release.yml": "GitHub release workflow",
     ".codex/skills/thinking-essence-extraction/SKILL.md": "Codex skill copy",

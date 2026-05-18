@@ -3,8 +3,8 @@ param(
     [string]$Target = "."
 )
 
-$RepoUrl = "https://github.com/<your-org>/thinking-essence-extraction"
-$Branch = "main"
+$RepoUrl = "https://github.com/HuLi-12/thinking-essence-extraction"
+$Branch = "master"
 $Target = Resolve-Path $Target -ErrorAction Stop
 
 Write-Host "Installing thinking-essence-extraction for Codex CLI → $Target" -ForegroundColor Green
