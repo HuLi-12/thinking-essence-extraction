@@ -28,6 +28,17 @@ REQUIRED_FILES = {
     "docs/module_cards.md": "module cards (15 modules)",
     "docs/baseline_evolution_workflow.md": "baseline evolution workflow",
     "examples/baseline_evolution_examples.md": "baseline evolution examples",
+    "AGENTS.md": "Codex agent manifest",
+    "CLAUDE.md": "Claude project entry",
+    "install/install.sh": "Unix install script",
+    "install/install.ps1": "Windows install script",
+    "install/install_codex.sh": "Codex Unix install",
+    "install/install_codex.ps1": "Codex Windows install",
+    "install/install_claude.sh": "Claude Unix install",
+    "install/install_claude.ps1": "Claude Windows install",
+    "install/verify_installation.py": "install verification script",
+    ".github/workflows/release.yml": "GitHub release workflow",
+    ".codex/skills/thinking-essence-extraction/SKILL.md": "Codex skill copy",
 }
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
