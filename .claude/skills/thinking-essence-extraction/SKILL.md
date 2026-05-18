@@ -1,6 +1,6 @@
 ---
 name: thinking-essence-extraction
-version: 1.4.0
+version: 1.4.1
 description: >
   当用户分析技术概念、神经网络模块、论文方法、实验失效、架构设计或工程方案，
   且要求直击本质、拒绝表层解释时使用。该技能强制分析落到变量、机制链、
@@ -540,70 +540,12 @@ small branch 与原 ASPP low-dilation branch 功能重叠
 
 ## Literature/Module Search Rule
 
-当为 baseline evolution 搜索文献或模块时，按照以下规则进行。
+当为 baseline evolution 搜索文献或模块时，必须围绕瓶颈变量搜索，
+而不是围绕"增强语义""提升性能"等抽象目标搜索。
 
-### 1. Search Around Variables, Not Vague Concepts
+详细规则（Search Priority、Map Module to Defect、Evidence Record 等）参考：
 
-错误搜索方向：
-
-```text
-特征融合模块
-语义增强方法
-多尺度上下文
-```
-
-正确搜索方向：
-
-```text
-解决 boundary 定位精度的模块
-控制 ERF 与目标尺度对齐的结构
-处理 class imbalance / class confusion 的 loss
-能增加 feature 类间距离的正则方法
-浅层梯度衰减问题的辅助训练结构
-```
-
-### 2. Map Module to Defect
-
-找到一个候选模块后，必须回答：
-
-- 这个模块解决了我的哪类缺陷？
-- 它改变了哪个具体变量（C, H, W, dilation, loss weight, gradient path...）？
-- 它在原论文中被验证解决的是什么场景下的问题（大目标、小目标、边界、类混淆）？
-- 它的引入代价是什么（参数量、FLOPs、activation memory、训练稳定性）？
-
-### 3. Reject Without Verification
-
-以下情况直接拒绝引入：
-
-- "在 XX 数据集上 SOTA" 但没有说明解决了什么具体变量
-- 只给了整体指标，没有类别级或尺度级分析
-- 模块复杂度远大于当前 baseline 的瓶颈复杂度
-
-### 4. Search Priority
-
-按以下优先级从高到低搜索：
-
-1. 直接改变当前瓶颈变量的模块（如 boundary loss → B-IoU 下降）
-2. 对当前架构改动最小的方案（增量改动优先于重构）
-3. 在类似数据分布上验证过的方案（遥感优先于通用视觉）
-4. 有公开源码和预训练权重的方案
-
-### 5. Evidence Record
-
-查找资料后必须记录以下字段。禁止只因为 "SOTA" 或 "论文新" 就加入候选池。
-
-```text
-方法名称：
-论文年份/来源：
-是否有公开代码：
-是否有预训练权重：
-验证数据集：
-是否与当前 baseline 同任务/同尺度/同输入分辨率：
-是否控制 Params / FLOPs：
-核心提升来自哪个变量：
-是否有 class-wise / scale-wise / boundary 指标：
-可复现实验入口：
-```
+- `docs/baseline_evolution_workflow.md`
 
 
 ## Baseline Evolution Rule
