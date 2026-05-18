@@ -337,6 +337,64 @@ B. 加 contrastive loss（在 decoder 输出上增加辅助 loss，拉大类间�
 > 问题：没有变量分析、没有设计 P0 验证瓶颈假设、没有反馈规则。
 
 
+---
+
+## Test 13：Literature/Module Search Evidence Record
+
+### 输入
+
+```text
+我找到一个模块：Dual Attention Network（DANet），在 Cityscapes 上 SOTA。
+它用 position attention + channel attention 并行融合。能不能用在
+我的 DeepLabV3+ LoveDA baseline 上？
+```
+
+### 合格标准
+
+- [ ] 必须按 Evidence Record 字段分析（公开代码、预训练权重、验证数据集）
+- [ ] 必须指出 Cityscapes（驾驶场景）与 LoveDA（遥感）的数据分布差异
+- [ ] 必须判断核心提升来自哪个变量（position attention 改变了什么？）
+- [ ] 不能只因为 "SOTA" 就推荐加入
+
+### 不合格示例
+
+```text
+DANet 在 Cityscapes 上效果很好，可以试试用在遥感上。
+```
+
+> 问题：没有 Evidence Record、没有考虑 domain gap、把 SOTA 当推荐理由。
+
+---
+
+## Test 14：Result Feedback——Module Retention Decision
+
+### 输入
+
+```text
+我在 DeepLabV3+ 的 ASPP 后加了 non-local block，结果：
+- mIoU 从 48.5% 升到 49.2%（+0.7%）
+- 但 road IoU 从 72.3% 降到 70.1%（-2.2%）
+- water IoU 从 21.5% 升到 25.8%（+4.3%）
+
+我应该保留还是丢弃 non-local block？判断依据是什么？
+```
+
+### 合格标准
+
+- [ ] 必须分析 mIoU 上升但类别间有升降的原因（不是简单看 mIoU）
+- [ ] 必须给出保留/丢弃的判断规则（基于什么条件）
+- [ ] 必须说明如果保留，需要怎么补偿下降的类
+- [ ] 必须说明如果丢弃，是否尝试其他方案获得类似收益
+
+### 不合格示例
+
+```text
+mIoU 提升 0.7%，应该保留 non-local block。
+```
+
+> 问题：只看 mIoU 汇总指标，没有分析类别间分配转移，没有补偿策略。
+
+
 ## 测试执行记录
 
 | 测试编号 | 测试日期 | 结果 (PASS/FAIL) | 失败原因 | 修复动作 |
@@ -353,3 +411,5 @@ B. 加 contrastive loss（在 decoder 输出上增加辅助 loss，拉大类间�
 | Test 10 | | | | |
 | Test 11 | | | | |
 | Test 12 | | | | |
+| Test 13 | | | | |
+| Test 14 | | | | |

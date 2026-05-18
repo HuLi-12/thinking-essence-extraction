@@ -51,7 +51,7 @@
 3. 如果 probe 精度高（>90%），说明 feature 可分但 decoder/classifier 未有效利用 → 瓶颈在 decoder
 
 预期收益：明确了真正瓶颈位置，避免在错误方向上投入
-耗时预估：1-2 天（用冻结 backbone 训练 probe）
+资源成本：仅需冻结 backbone 提取 feature 训练 linear probe，不需要完整重新训练，适合 P0 快速验证
 ```
 
 #### P1：确认 bottleneck 后执行对应改进
@@ -132,12 +132,12 @@
 P0（验证优化不稳定性假设）：
   实验：freeze backbone BN + 只训练 decoder/ASPP + Dice Loss
   预期：water/forest IoU 波动从 5% 降到 2%，均值提升 2-3%
-  耗时：1-2 天
+  资源成本：仅需 freeze backbone BN + 调 loss 配置，不需要修改网络结构
 
 P1（验证 ASPP 冗余假设）：
   实验：如果 P0 通过，移除 dilation=6 branch（控制总参数可比）
   预期：mIoU 不降甚至微升（因为少参数后同等 epoch 训练更充分）
-  耗时：1 天
+  资源成本：需要完整训练 1 个实验，但分支删除后训练速度更快
 
 P2（边界增强）：
   实验：P0 + P1 通过后，增加 boundary loss

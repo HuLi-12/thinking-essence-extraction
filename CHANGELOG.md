@@ -1,6 +1,15 @@
 # Changelog
 
-## v1.4.0 (2026-05-17)
+## v1.4.1 (2026-05-18)
+
+- 恢复 SKILL.md 末尾 `## Domain Reference` 标题，新增新文档引用路径
+- 抽出 `docs/baseline_evolution_workflow.md`，SKILL.md 保留简版 Baseline Evolution Rule
+- Literature/Module Search Rule 新增 Evidence Record 字段（记录代码、权重、数据集等）
+- module_cards.md 开头加入 Estimation Warning（代价为经验估计，非结构事实）
+- baseline_evolution_examples.md 中"耗时预估"改为"资源成本"
+- 强化 Test 10-12 检查点（增加瓶颈变量、最小验证、class-wise IoU 等）
+- 新增 Test 13（文献/模块搜索结果评估）、Test 14（模块保留/丢弃决策）
+- 更新 validate_skill_package.py（新增 workflow doc、更新章节检查）
 
 - 新增 Type F: Baseline Evolution 到 Problem Type Router
 - 新增 Evolution Mode 到 Output Mode Rule

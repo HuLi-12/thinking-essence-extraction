@@ -4,6 +4,22 @@
 
 ---
 
+## Estimation Warning
+
+模块卡中的 Params / FLOPs / 显存代价为**经验估计，不是结构事实**。
+
+正式实验前必须使用实际代码统计：
+
+- params
+- FLOPs / MACs
+- activation memory
+- training memory
+- inference latency
+
+不要把模块卡中的代价估算当成最终实验结论。实际代价取决于具体实现、输入尺寸、框架算子效率。
+
+---
+
 ## 1. Deformable Convolution
 
 **对应缺陷**：Spatial Detail Recovery Failure（细长结构断裂、不规则目标覆盖差）

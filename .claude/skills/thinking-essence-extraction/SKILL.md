@@ -588,77 +588,61 @@ small branch 与原 ASPP low-dilation branch 功能重叠
 3. 在类似数据分布上验证过的方案（遥感优先于通用视觉）
 4. 有公开源码和预训练权重的方案
 
+### 5. Evidence Record
 
-## Baseline Evolution Workflow Template
-
-当用户请求规划设计 baseline 进化路线时，使用以下模板。
-
-### 1. Baseline Profile
+查找资料后必须记录以下字段。禁止只因为 "SOTA" 或 "论文新" 就加入候选池。
 
 ```text
-当前架构：
-当前 mIoU：
-关键瓶颈（基于已有实验或分析）：
-```
-
-### 2. Defect Hypothesis
-
-列出当前 baseline 最可能存在的缺陷（从 Defect Taxonomy 中选择），
-每个缺陷必须附带证据或推断：
-
-```text
-缺陷类型：
-证据/推断：
-瓶颈变量：
-```
-
-### 3. Candidate Module Pool
-
-针对每个缺陷，推荐候选模块。每个模块必须包含：
-
-```text
-对应缺陷：
-修改变量：
-引入位置：
-代价估算（参数量/FLOPs/显存）：
-最小验证实验：
-```
-
-### 4. Experiment Priority
-
-设计实验序列，按优先级排列：
-
-```text
-P0（必须优先验证的瓶颈假设）：
-  - 实验设计：
-  - 预期收益：
-  - 耗时预估：
-
-P1（如果 P0 验证通过后的下一步）：
-  - 实验设计：
-  - 预期收益：
-
-P2（锦上添花，前提是 P0/P1 通过）：
-  - 实验设计：
-```
-
-### 5. Result Feedback Rule
-
-```text
-如果观察到 [指标变化 A]：
-→ 说明 [假设 B] 成立
-→ 下一步做 [实验 C]
-
-如果观察到 [指标变化 D]：
-→ 说明 [假设 E] 不成立
-→ 切换到 [备选路线 F]
-
-如果观察到 [异常现象 G]：
-→ 回到 Defect Hypothesis 重新诊断
+方法名称：
+论文年份/来源：
+是否有公开代码：
+是否有预训练权重：
+验证数据集：
+是否与当前 baseline 同任务/同尺度/同输入分辨率：
+是否控制 Params / FLOPs：
+核心提升来自哪个变量：
+是否有 class-wise / scale-wise / boundary 指标：
+可复现实验入口：
 ```
 
 
-分析遥感语义分割、DeepLabV3+、ASPP、decoder、LoveDA、mIoU、class-wise IoU 等问题时，
-参考 `examples/remote_sensing_segmentation_examples.md` 中的案例风格，但**迁移结构，不复用结论**。
-分析工程设计问题时，参考 `examples/engineering_design_examples.md`。
-常见变量定义参考 `docs/variable_cards.md`，反例参考 `docs/anti_patterns.md`。
+## Baseline Evolution Rule
+
+当用户请求 baseline 魔改、网络结构进化、模块搜索、实验路线设计时，使用 Evolution Mode。
+
+必须遵守以下流程：
+
+```text
+baseline 缺陷 → 瓶颈变量 → 候选模块 → 适配判断 → 最小实验 → 结果反馈
+```
+
+详细模板和搜索规则参考：
+
+- `docs/baseline_evolution_workflow.md`
+- `docs/baseline_defect_taxonomy.md`
+- `docs/module_cards.md`
+- `examples/baseline_evolution_examples.md`
+
+
+---
+
+## Domain Reference
+
+分析遥感语义分割、DeepLabV3+、ASPP、decoder、LoveDA、mIoU、class-wise IoU 等问题时，参考：
+
+- `examples/remote_sensing_segmentation_examples.md`
+- `examples/baseline_evolution_examples.md`
+- `docs/baseline_defect_taxonomy.md`
+- `docs/module_cards.md`
+- `docs/baseline_evolution_workflow.md`
+- `docs/variable_cards.md`
+
+分析工程设计问题时，参考：
+
+- `examples/engineering_design_examples.md`
+
+反例和错误分析参考：
+
+- `docs/anti_patterns.md`
+
+必须迁移分析结构，不机械复用结论。

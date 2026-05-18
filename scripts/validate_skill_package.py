@@ -26,6 +26,7 @@ REQUIRED_FILES = {
     "scripts/sync_claude_skill.py": "sync script for .claude SKILL.md copy",
     "docs/baseline_defect_taxonomy.md": "baseline defect taxonomy (10 types)",
     "docs/module_cards.md": "module cards (15 modules)",
+    "docs/baseline_evolution_workflow.md": "baseline evolution workflow",
     "examples/baseline_evolution_examples.md": "baseline evolution examples",
 }
 
@@ -76,7 +77,7 @@ def check_skill_frontmatter() -> List[str]:
         "Standard Output Template",
         "Anti-pattern Self-check",
         "Literature/Module Search Rule",
-        "Baseline Evolution Workflow Template",
+        "Baseline Evolution Rule",
     ]
     for section in required_sections:
         if f"## {section}" not in content:
